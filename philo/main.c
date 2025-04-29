@@ -3,27 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thodavid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: thodavid <thodavid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:08:24 by thodavid          #+#    #+#             */
-/*   Updated: 2025/04/23 15:30:20 by thodavid         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:04:56 by thodavid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
-#include <pthread.h>
+#include "philo.h"
 
-void	*ft_routine()
+int	main(int ac, char **av)
 {
-	printf("Hello World!\n");
-	return (NULL);
-}
-
-int	main()
-{
-	pthread_t t1;
-	pthread_create(&t1, NULL, &ft_routine, NULL);
-	pthread_join(t1, NULL);
+	ft_parsing(ac, av);
 	return (0);
 }
+
+
+/*
+number_of_philosophers 
+time_to_die 
+time_to_eat
+time_to_sleep
+[number_of_times_each_philosopher_must_eat]
+*/
