@@ -21,6 +21,8 @@ CFLAGS		= -Wall -Werror -Wextra
 ## SOURCES
 
 SRCS		= 	main.c\
+				utils.c\
+				utils.c\
 
 OBJS		= $(SRCS:.c=.o)
 
