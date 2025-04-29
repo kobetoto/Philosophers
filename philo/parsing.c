@@ -17,7 +17,7 @@ void	ft_parsing(int ac, char **av)
 	t_data	*data;
 	
 	data = NULL;
-	if (!(ac == 4) || !(ac == 5))
+	if (ac != 4 && ac != 5)
 		ft_error("ARG ERR\n==HINT: 4 or 5 arguments==");
 	ft_check_data(av);
 }
