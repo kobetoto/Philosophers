@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: thodavid <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: thodavid <thodavid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/23 14:55:14 by thodavid          #+#    #+#              #
-#    Updated: 2025/04/23 15:08:15 by thodavid         ###   ########.fr        #
+#    Updated: 2025/05/01 14:31:42 by thodavid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,15 +14,15 @@
 ## ARGUMENTS / VARIABLES
 
 NAME		= philo
-CC		= cc
+CC			= cc
 CFLAGS		= -Wall -Werror -Wextra
 
 ################################################################################
 ## SOURCES
 
 SRCS		= 	main.c\
-				utils.c\
-				utils.c\
+				src/utils.c\
+				src/parsing.c\
 
 OBJS		= $(SRCS:.c=.o)
 
@@ -38,7 +38,7 @@ $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f *.o 
+	rm -f *.o src/*.o
 
 fclean: clean
 	rm -f $(NAME)
