@@ -6,7 +6,7 @@
 #    By: thodavid <thodavid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/23 14:55:14 by thodavid          #+#    #+#              #
-#    Updated: 2025/05/01 14:31:42 by thodavid         ###   ########.fr        #
+#    Updated: 2025/05/02 10:43:26 by thodavid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ CFLAGS		= -Wall -Werror -Wextra
 SRCS		= 	main.c\
 				src/utils.c\
 				src/parsing.c\
+				src/thread.c\
 
 OBJS		= $(SRCS:.c=.o)
 
