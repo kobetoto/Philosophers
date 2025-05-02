@@ -71,3 +71,4 @@ void	ft_check_data(t_data *data)
 	if (data->max_meal <= 0)
 		ft_error("MAX MEAL ERR\n==HINT: wrong max meal==");
 }
+
