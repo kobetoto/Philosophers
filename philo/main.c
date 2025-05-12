@@ -6,7 +6,7 @@
 /*   By: thodavid <thodavid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:08:24 by thodavid          #+#    #+#             */
-/*   Updated: 2025/05/04 12:17:40 by thodavid         ###   ########.fr       */
+/*   Updated: 2025/05/12 15:39:25 by thodavid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,26 @@
 
 int main(int ac, char **av)
 {
-	t_data data;
-	pthread_t *arr_p;
-	data = ft_parsing(ac, av);
-	arr_p = ft_philo_thread(&data, &philo_life);
+	t_data	data;
+	pthread_t *arr_philo;
+	// struct timeval tv;
+	// long start;
+	// long time;
 
-	ft_free_thread_tab(arr_p, data.number_of_philos);
+	// gettimeofday(&tv, NULL);
+    // start = tv.tv_sec;
+	// // printf("Seconds since Jan. 1, 1970: %ld\n", tv.tv_sec);
+	// printf("START: %ld\n", start);
+	// sleep(4);
+	// gettimeofday(&tv, NULL);
+	// time = tv.tv_sec;
+	// printf("TIME: %ld\n", time - start);
+
+
+	data = ft_parsing(ac, av);
+	arr_philo = ft_philo_thread(&data, &philo_life);
+
+	ft_free_thread_tab(arr_philo, data.number_of_philos);
 	return (0);
 }
 
@@ -52,4 +66,3 @@ time_to_eat
 time_to_sleep
 [number_of_times_each_philosopher_must_eat]
 */
-
