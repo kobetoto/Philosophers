@@ -6,7 +6,7 @@
 /*   By: thodavid <thodavid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 08:15:41 by thodavid          #+#    #+#             */
-/*   Updated: 2025/05/04 14:18:48 by thodavid         ###   ########.fr       */
+/*   Updated: 2025/05/12 15:58:19 by thodavid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@
 
 typedef struct s_data	t_data;
 
-struct timevl 
-{
-    time_t      tv_sec;
-    suseconds_t tv_usec;
-};
+// struct timeval 
+// {
+//     time_t      tv_sec;
+//     suseconds_t tv_usec;
+// };
 
 
 typedef struct s_philo
@@ -76,10 +76,14 @@ void	ft_check_args(char **av);
 void	ft_check_data(t_data *data);
 void	*philo_life(void *arg);
 void	ft_log(int *philo_id);
+void    ft_sleeping(int *philo_id, char *color);
+void    ft_thinking(int *philo_id, char *color);
+void    ft_eating(int *philo_id, char *color);
 long	ft_atol(const char *nptr);
 long	get_timestamp_ms(void);
 int		ft_free_thread_tab(pthread_t *arr, int p);
 int		ft_atoi(const char *nptr);
 int		ft_isdigit(int c);
+char    *log_format(int *philo_id);
 
 #endif
