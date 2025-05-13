@@ -6,7 +6,7 @@
 /*   By: thodavid <thodavid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 08:15:41 by thodavid          #+#    #+#             */
-/*   Updated: 2025/05/12 15:58:19 by thodavid         ###   ########.fr       */
+/*   Updated: 2025/05/13 08:17:42 by thodavid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void	ft_error(char *str);
 void	ft_check_args(char **av);
 void	ft_check_data(t_data *data);
 void	*philo_life(void *arg);
-void	ft_log(int *philo_id);
 void    ft_sleeping(int *philo_id, char *color);
 void    ft_thinking(int *philo_id, char *color);
 void    ft_eating(int *philo_id, char *color);
@@ -87,3 +86,4 @@ int		ft_isdigit(int c);
 char    *log_format(int *philo_id);
 
 #endif
+
