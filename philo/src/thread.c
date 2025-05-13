@@ -6,7 +6,7 @@
 /*   By: thodavid <thodavid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 09:03:48 by thodavid          #+#    #+#             */
-/*   Updated: 2025/05/12 16:00:04 by thodavid         ###   ########.fr       */
+/*   Updated: 2025/05/13 09:03:22 by thodavid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@ pthread_t *ft_philo_thread(t_data *data, void *f())
     //remplissage du tableau 
     while (i < data->number_of_philos)
     {
+        int *philo_id = malloc(sizeof(int));
+        *philo_id = i;
         check_thread = 0;
-        usleep(242);
-        check_thread = pthread_create(&philo_id_arr[i], NULL, f, &i);
+        //passer t_philo pour que chaque thread ai sa  strucutre
+        check_thread = pthread_create(&philo_id_arr[i], NULL, f, philo_id);
         if (check_thread != 0)
             ft_error("failed to create thread");
         i++;
@@ -40,25 +42,23 @@ pthread_t *ft_philo_thread(t_data *data, void *f())
 void *philo_life(void *arg)
 {
     int *id;
-
-    id = (int *) arg;
-    ft_log(id);
-    return (NULL);
-}
-
-void ft_log(int *philo_id)
-{
     char *color;
 
-    color = log_format(philo_id);
-    ft_eating(philo_id, color);
-    ft_thinking(philo_id, color);
-    ft_sleeping(philo_id, color);
+    id = (int *) arg;
+    color = log_format(id);
+    while(1)
+    {
+        ft_eating(id, color);
+        ft_thinking(id, color);
+        ft_sleeping(id, color);
+        sleep(2);
+    }
+    free(arg);
+    return (NULL);
 }
 
 void    ft_eating(int *philo_id, char *color)
 {
-
     printf("%s%i EAT"RESET"\n", color, *philo_id);
 }
 
@@ -99,3 +99,4 @@ int pthread_create(pthread_t *thread,
 | `void *(*start_routine)(void *)` | Fonction que le thread exécutera.          |
 | `void *arg`                      | Argument transmis à la fonction du thread. |
 */
+
