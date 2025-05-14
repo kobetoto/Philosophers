@@ -6,7 +6,7 @@
 /*   By: thodavid <thodavid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:08:24 by thodavid          #+#    #+#             */
-/*   Updated: 2025/05/12 15:39:25 by thodavid         ###   ########.fr       */
+/*   Updated: 2025/05/14 12:12:16 by thodavid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int main(int ac, char **av)
 {
-	t_data	data;
+	t_data	*data;
 	pthread_t *arr_philo;
 	// struct timeval tv;
 	// long start;
@@ -32,9 +32,19 @@ int main(int ac, char **av)
 
 
 	data = ft_parsing(ac, av);
-	arr_philo = ft_philo_thread(&data, &philo_life);
+	arr_philo = ft_philo_thread(data, &philo_life);
 
-	ft_free_thread_tab(arr_philo, data.number_of_philos);
+	// int	i;
+	// i = 0;
+	// while(i < data->number_of_philos)
+	// {
+	// 	printf("philo[%i]: \n id ==> %i\nright fork %i\n\n",i+1, data->philos_arr[i].id, data->philos_arr[i].right_fork);
+	// 	i++;
+	// }	
+
+	
+
+	ft_free_thread_tab(arr_philo, data->number_of_philos);
 	return (0);
 }
 
@@ -66,3 +76,4 @@ time_to_eat
 time_to_sleep
 [number_of_times_each_philosopher_must_eat]
 */
+
