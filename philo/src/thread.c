@@ -6,7 +6,7 @@
 /*   By: thodavid <thodavid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 09:03:48 by thodavid          #+#    #+#             */
-/*   Updated: 2025/05/13 09:03:22 by thodavid         ###   ########.fr       */
+/*   Updated: 2025/05/14 10:43:19 by thodavid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,13 @@ void *philo_life(void *arg)
 
     id = (int *) arg;
     color = log_format(id);
-    while(1)
-    {
-        ft_eating(id, color);
-        ft_thinking(id, color);
-        ft_sleeping(id, color);
-        sleep(2);
-    }
+    // while(1)
+    // {
+    //     ft_eating(id, color);
+    //     ft_thinking(id, color);
+    //     ft_sleeping(id, color);
+    //     sleep(2);
+    // }
     free(arg);
     return (NULL);
 }
