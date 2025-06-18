@@ -6,7 +6,7 @@
 /*   By: thodavid <thodavid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:03:23 by thodavid          #+#    #+#             */
-/*   Updated: 2025/05/01 13:33:59 by thodavid         ###   ########.fr       */
+/*   Updated: 2025/06/18 13:32:49 by thodavid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,13 @@ long	ft_atol(const char *nptr)
 int	ft_isdigit(int c)
 {
 	return (c >= '0' && c <= '9');
+}
+
+/*-----------------------------------------------*/
+
+char *log_format(int philo_id)
+{
+	static char *colors[] = {PURPLE, CYAN, GREEN}; // tourne sur 4 couleurs
+	int index = (philo_id - 1) % 3;
+	return (colors[index]);
 }
