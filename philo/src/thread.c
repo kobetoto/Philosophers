@@ -6,97 +6,144 @@
 /*   By: thodavid <thodavid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 09:03:48 by thodavid          #+#    #+#             */
-/*   Updated: 2025/05/14 10:43:19 by thodavid         ###   ########.fr       */
+/*   Updated: 2025/06/18 15:00:07 by thodavid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-pthread_t *ft_philo_thread(t_data *data, void *f())
+pthread_t *ft_thread(t_data *data, void *f())
 {
     int i;
     int check_thread;
-    //creation dun tableau de thread(philo)
-    pthread_t *philo_id_arr;
+    pthread_t *threads_arr;
 
     i = 0;
-    //allocation de memoire pour le tableau de philos
-    philo_id_arr = malloc(sizeof(pthread_t) * data->number_of_philos);
-    if (philo_id_arr == NULL)
+    check_thread = 0;
+    threads_arr = malloc(sizeof(pthread_t) * data->number_of_philos);
+    if (threads_arr == NULL)
         ft_error("philo_arr malloc failed");
-    //remplissage du tableau 
     while (i < data->number_of_philos)
     {
-        int *philo_id = malloc(sizeof(int));
-        *philo_id = i;
-        check_thread = 0;
-        //passer t_philo pour que chaque thread ai sa  strucutre
-        check_thread = pthread_create(&philo_id_arr[i], NULL, f, philo_id);
+        check_thread = pthread_create(&threads_arr[i], NULL, f, &data->philos_arr[i]);
         if (check_thread != 0)
             ft_error("failed to create thread");
         i++;
     }
-    return (philo_id_arr);
+    return (threads_arr);
 }
 
+/*
+todo:
+leaaaaaaaaaaaaak
+free(arg) n'est jamais atteint
+🔧 Solution :
+Soit tu passes
+t_philo * au lieu d’un int * pour chaque thread.
+Soit tu extrais
+la logique vers un while (!stop_condition) et tu free à la fin.
+*/
 void *philo_life(void *arg)
 {
-    int *id;
-    char *color;
+    t_philo *philo;
+    pthread_t death_checker;
+    // pthread_mutex_t mutex;
 
-    id = (int *) arg;
-    color = log_format(id);
-    // while(1)
-    // {
-    //     ft_eating(id, color);
-    //     ft_thinking(id, color);
-    //     ft_sleeping(id, color);
-    //     sleep(2);
-    // }
-    free(arg);
+    philo = (t_philo *)arg;
+    pthread_create(&death_checker, NULL, ft_thread_death_check, philo);
+    pthread_detach(death_checker);//autonomus thread
+    while (!philo->data->death)
+    {
+        printf("\n-------------------------------------------------\nHELLO IAM THREAD?PHILO?   [%i]\nR-fork->[%i]~~~L-fork->[%i]\n",
+               philo->id, philo->right_fork, philo->left_fork);
+        ft_take_forks(philo);
+        ft_eating(philo);
+        //ft_putDown_fork(philo);
+        ft_sleeping(philo);
+        ft_thinking(philo);
+    }
+    // free(arg);
     return (NULL);
 }
 
-void    ft_eating(int *philo_id, char *color)
+void ft_eating(t_philo *philo)
 {
-    printf("%s%i EAT"RESET"\n", color, *philo_id);
+    long ts;
+    
+    ts = timestamp_now(philo->data);
+    printf("%s%ld %i is eating" RESET "\n", log_format(philo->id), ts, philo->id);
 }
 
-void    ft_thinking(int *philo_id, char *color)
+void ft_thinking(t_philo *philo)
 {
-    printf("%s%i THINK" RESET "\n", color, *philo_id);
+    long ts;
+    
+    ts = timestamp_now(philo->data);
+    printf("%s%ld %i is thinking" RESET "\n", log_format(philo->id), ts, philo->id);
 }
 
-void    ft_sleeping(int *philo_id, char *color)
+void ft_sleeping(t_philo *philo)
 {
-    printf("%s%i SLEEP"RESET"\n", color, *philo_id);
+    long ts;
+    
+    ts = timestamp_now(philo->data);
+    printf("%s%ld %i is sleeping" RESET "\n", log_format(philo->id), ts, philo->id);
 }
 
-char    *log_format(int *philo_id)
+
+
+void *ft_thread_death_check(void *arg)
 {
-        char *color;
-        color = "";
-    if (((*philo_id) % 1) == 0)
-        color = PURPLE;
-    if (((*philo_id) % 2) == 0)
-        color = CYAN;
-    if (((*philo_id) % 3) == 0)
-        color = GREEN;
-    return (color);
+    t_philo *philo;
+    pthread_mutex_t mutex;
+    long    now;
+
+    philo = (t_philo *)arg;
+    pthread_mutex_init(&mutex, NULL);
+    while (philo->data->death == 0)
+    {
+        now = get_timestamp_ms();
+        if((now - (philo->last_meal)) >= philo->data->time_to_die)
+        {
+            pthread_mutex_lock(&mutex);
+			printf("%s%ld %d died\n",RED, now - philo->data->start, philo->id);
+            pthread_mutex_unlock(&mutex);
+            pthread_mutex_destroy(&mutex);
+            philo->data->death = 1;
+            break;
+        }
+        usleep(242);
+    }  
+    return (NULL);
 }
 
-/* 
+void    ft_take_forks(t_philo *philo)
+{
+    int left_f;
+    int right_f;
 
-int pthread_create(pthread_t *thread,
-                   const pthread_attr_t *attr,
-                   void *(*start_routine)(void *),
-                   void *arg);
-
-| Argument                         | Rôle                                       |
-| -------------------------------- | ------------------------------------------ |
-| `pthread_t *thread`              | Pointeur pour stocker l’ID du thread créé. |
-| `const pthread_attr_t *attr`     | Attributs du thread (NULL = défaut).       |
-| `void *(*start_routine)(void *)` | Fonction que le thread exécutera.          |
-| `void *arg`                      | Argument transmis à la fonction du thread. |
-*/
-
+    left_f = philo->left_fork;
+    right_f = philo->right_fork;
+    if (philo->id % 2 == 0)
+    {
+        pthread_mutex_lock(&philo->data->forks_arr[left_f].mutex);
+        ft_log(philo, "has taken a fork");
+        pthread_mutex_lock(&philo->data->forks_arr[right_f].mutex);
+    }
+    else
+    {
+        pthread_mutex_lock(&philo->data->forks_arr[right_f].mutex);
+        ft_log(philo, "has taken a fork");
+        pthread_mutex_lock(&philo->data->forks_arr[left_f].mutex);
+    }
+}
+void    ft_log(t_philo *philo, char *msg)
+{
+    long ts;
+    
+	if(philo->data->death)
+		return ;
+    ts = timestamp_now(philo->data);
+    pthread_mutex_lock(&philo->data->print_mutex);
+    printf("%s%ld %i %s" RESET "\n", log_format(philo->id), ts, philo->id, msg);
+}
