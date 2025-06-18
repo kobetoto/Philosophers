@@ -6,16 +6,18 @@
 #    By: thodavid <thodavid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/23 14:55:14 by thodavid          #+#    #+#              #
-#    Updated: 2025/05/04 09:06:05 by thodavid         ###   ########.fr        #
+#    Updated: 2025/06/17 14:01:06 by thodavid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 ################################################################################
 ## ARGUMENTS / VARIABLES
 
 NAME		= philo
 CC			= cc
-CFLAGS		= -Wall -Werror -Wextra
+#todo:: check for the -pthread flag
+CFLAGS		= -Wall -Werror -Wextra -pthread
 SRC_DIR		= srcs
 OBJ_DIR		= objs
 
