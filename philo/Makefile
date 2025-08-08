@@ -16,7 +16,6 @@
 
 NAME		= philo
 CC			= cc
-#todo:: check for the -pthread flag
 CFLAGS		= -Wall -Werror -Wextra -pthread -g3
 SRC_DIR		= srcs
 OBJ_DIR		= objs
