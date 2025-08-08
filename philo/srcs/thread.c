@@ -44,18 +44,18 @@ void *philo_routine(void *arg)
     pthread_detach(death_checker);
     while (1)
     {
-    pthread_mutex_lock(&philo->data->state_mutex);
-    if(philo->data->death)
-    {
+        pthread_mutex_lock(&philo->data->state_mutex);
+        if(philo->data->death)
+        {
+            pthread_mutex_unlock(&philo->data->state_mutex);
+            break;
+        }
         pthread_mutex_unlock(&philo->data->state_mutex);
-        break;
-    }
-    pthread_mutex_unlock(&philo->data->state_mutex);
-    ft_take_forks(philo);
-    ft_eating(philo);
-    ft_put_down_fork(philo);
-    ft_sleeping(philo);
-    ft_thinking(philo);
+        ft_take_forks(philo);
+        ft_eating(philo);
+        ft_put_down_fork(philo);
+        ft_sleeping(philo);
+        ft_thinking(philo);
     }
     return (NULL);
 }
